@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Monastery Community Upload</title>
+  <style>
+    body {
+      background: #ceba8e;
+      color: #432715;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    h1 {
+      color: #b81237;
+      text-align: center;
+      margin-top: 40px;
+      text-shadow: 1px 1px #ceba8e88;
+    }
+    form {
+      background: #cd681a;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px #43271533;
+      max-width: 420px;
+      margin: 40px auto 28px auto;
+      padding: 25px 30px 22px 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    label {
+      font-size: 1.1em;
+      color: #432715;
+      margin-bottom: 8px;
+      font-weight: bold;
+    }
+    input[type="file"] {
+      background: #ceba8e;
+      border: 2px solid #432715;
+      color: #432715;
+      border-radius: 5px;
+      font-size: 1em;
+      padding: 8px;
+      margin-bottom: 12px;
+      width: 95%;
+    }
+    button {
+      background: #b81237;
+      color: #f2f2f2;
+      border: none;
+      border-radius: 4px;
+      padding: 12px 24px;
+      font-size: 1.1em;
+      font-weight: bold;
+      letter-spacing: 1px;
+      cursor: pointer;
+      margin-top: 8px;
+      box-shadow: 1px 2px #43271555;
+    }
+    button:hover {
+      background: #cd681a;
+      color: #231f20;
+    }
+    .info, .success {
+      text-align: center;
+      color: #432715;
+      background: #ceba8e88;
+      margin: 0 auto;
+      max-width: 420px;
+      padding: 8px 0 10px 0;
+      border-radius: 8px;
+      font-size: 0.98em;
+      margin-bottom: 10px;
+    }
+    .success {
+      color: #cd681a;
+      font-weight: bold;
+      border: 2px solid #b81237;
+    }
+  </style>
+</head>
+<body>
+  <h1>Monastery Community Upload</h1>
+  <div class="info">
+    You can upload documents, photos, or images.<br>
+    Formats allowed: PDF, DOCX, JPG, PNG, etc.
+  </div>
+  <div id="successMessage" class="success" style="display:none;">
+    File is successfully uploaded.
+  </div>
+  <form id="uploadForm" enctype="multipart/form-data">
+    <label for="file">Choose file or image</label>
+    <input type="file" id="file" name="file" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.gif,.bmp" required>
+    <button type="submit">Upload</button>
+  </form>
+  <script>
+    document.getElementById('uploadForm').onsubmit = async function(e) {
+      e.preventDefault();
+      const formData = new FormData(this);
+      await fetch('/upload', {
+        method: 'POST',
+        body: formData
+      });
+      document.getElementById('successMessage').style.display = 'block';
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
+    }
+  </script>
+</body>
+</html>
